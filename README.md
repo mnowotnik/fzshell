@@ -1,4 +1,4 @@
-# fzshell
+# fzshell (WORK IN PROGRESS)
 
 Easily customizable shell completion
 
