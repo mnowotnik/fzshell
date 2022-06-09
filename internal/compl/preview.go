@@ -21,7 +21,7 @@ func (p *CompletionEntry) RenderPreview() (string, error) {
 	}
 	tmplData["item"] = p.Item
 	if buf, err := renderFromTemplate(p.Preview.PreviewTmpl, p.Preview.MatchResult.subExp, tmplData); err != nil {
-		return "", errors.Wrapf(err, "error rendering template [item=%s]: %s", p.Item)
+		return "", errors.Wrapf(err, "error rendering template [item=%s]", p.Item)
 	} else {
 		return buf.String(), nil
 	}
