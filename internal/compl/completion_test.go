@@ -54,7 +54,7 @@ func TestEmptyCompletionWReplacement(t *testing.T) {
 
 func TestCompletionShellTmpl(t *testing.T) {
 	c := NewCompletion("(foo) bar")
-	c.Replacement = `{{ shell "echo -ne " ._1 }} xyz`
+	c.Replacement = `{{ shell "printf %s" ._1 }} xyz`
 	r, code := c.MatchAndFind("foo bar", CompletionOptions{})
 	assert.Equal(t, "foo xyz", r[0])
 	assert.Equal(t, Matched, code)
@@ -62,7 +62,7 @@ func TestCompletionShellTmpl(t *testing.T) {
 
 func TestCompletionCmdTmpl(t *testing.T) {
 	c := NewCompletion("(foo) bar")
-	c.Replacement = `{{ cmd "echo" "-ne" ._1 }} xyz`
+	c.Replacement = `{{ cmd "printf" "%s" ._1 }} xyz`
 	r, code := c.MatchAndFind("foo bar", CompletionOptions{})
 	assert.Equal(t, "foo xyz", r[0])
 	assert.Equal(t, Matched, code)
