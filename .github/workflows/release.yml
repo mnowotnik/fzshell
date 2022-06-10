@@ -7,7 +7,16 @@ on:
 
 jobs:
   release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: ncipollo/release-action@v1.7.3
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+  build_upload:
     name: Release Go Binary
+    needs: [release]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,10 +35,6 @@ jobs:
       - name: set version
         id: version
         run: echo "FZSHELL_VERSION=$(git describe --abbrev=0 2> /dev/null)" >> $GITHUB_ENV
-      - name: Create Release
-        uses: ncipollo/release-action@v1.7.3
-        with:
-            token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and upload artifacts
         uses: wangyoucao577/go-release-action@v1.28
         with:
