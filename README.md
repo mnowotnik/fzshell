@@ -23,7 +23,18 @@ completions:
 ## Why?
 
 fzshell was born out of my frustration with performing the same manual tasks
-over and over. Like removing obsolete docker containers, deleting kubernetes pods with kubectl or browsing their logs and even copy pasting ticket id from a branch name to a commit message. All of these tasks can be automated at least partially by fzshell. See the [gallery](https://github.com/mnowotnik/fzshell/wiki/Gallery) for use cases.
+over and over. Like removing obsolete docker containers, deleting kubernetes
+pods with kubectl or browsing their logs and even copy pasting ticket id from a
+branch name to a commit message. 
+
+I tried to to solve this problem in the past using only shell scripts and the result was [docker-fzf-completion](https://github.com/mnowotnik/docker-fzf-completion). However, it was not extensible at all and I had to write a lot of unreadable bash scripts to make it work for any extra command. Additionally, it required from a user more keystrokes than one.
+
+Enter fzshell. All of these tasks I mentioned can be automated at least
+partially by fzshell. It divides completions generation into familiar steps,
+namely: matching, mapping and filtering. A user only has to provide logic for
+those steps and doesn't have to worry about wiring it all together and edge
+cases.  Check out the
+[gallery](https://github.com/mnowotnik/fzshell/wiki/Gallery) of examples to get ideas on how fzshell can help you.
 
 ## Quickstart
 
@@ -88,7 +99,36 @@ As you can see the completion definition here has several attributes:
 
 Visit [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for a complete configuration guide.
 
-### Usage
+## Usage
+
+The hardest part of using fzshell is writing a correct configuration.
+When that's the case, all you need to do is press `Ctrl-n` when a cursor is just
+after a matching pattern.
+
+Let's consider the example above. Assume the command line looks like this:
+
+```bash
+jq . pets.json▉
+```
+
+You just need to press `Ctrl-n` to activate fzshell and get a match.
+However, if the line deviates from a pattern even a bit nothing will happen.
+No match for this line:
+
+```bash
+jq . pets.json ▉
+```
+
+You would need to modify the pattern a bit to handle extra spaces at the end:
+
+```yml
+pattern: "jq '?(\\.[^']*)'? (\\w+.json) *"
+```
+
+By default the completion will be inserted at the cursor position, however you
+can have complete control over the insertion by defining the `replacement` template. It *replaces* the left part of the line buffer (meaning: to the
+left of the cursor). Check [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for more details.
+
 
 ## On the way to 1.0.0
 
