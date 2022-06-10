@@ -33,8 +33,7 @@ jobs:
         id: short_commit
         run: echo "SHORT_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: set version
-        id: version
-        run: echo "FZSHELL_VERSION=$(git describe --abbrev=0 2> /dev/null)" >> $GITHUB_ENV
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Build and upload artifacts
         uses: wangyoucao577/go-release-action@v1.28
         with:
@@ -44,4 +43,4 @@ jobs:
           goarch: ${{ matrix.goarch }}
           binary_name: "fzshell"
           ldflags: > 
-            -s -w -X main.version=${{ env.FZSHELL_VERSION }} -X main.revision=${{ env.SHORT_COMMIT }}
+            -s -w -X main.version=${{ env.RELEASE_VERSION }} -X main.revision=${{ env.SHORT_COMMIT }}
