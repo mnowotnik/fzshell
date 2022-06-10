@@ -3,6 +3,7 @@ package compl
 import (
 	"bytes"
 	"os/exec"
+	"reflect"
 	"strconv"
 	"strings"
 	"text/template"
@@ -45,11 +46,30 @@ func shell(cmd ...string) (string, error) {
 	return string(out), nil
 }
 
+func listGet(idx int, lst []interface{}) interface{} {
+	return lst[idx]
+}
+
+func mapGet(key interface{}, mmap interface{}) interface{} {
+	mapVal, ok := mmap.(reflect.Value)
+	if !ok {
+		mapVal = reflect.ValueOf(mmap)
+	}
+
+	keyVal, ok := key.(reflect.Value)
+	if !ok {
+		keyVal = reflect.ValueOf(key)
+	}
+	return mapVal.MapIndex(keyVal).Interface()
+}
+
 func getFuncMap() template.FuncMap {
 	funcMap := sprig.TxtFuncMap()
 	funcMap["shell"] = shell
 	funcMap["cmd"] = cmd
 	funcMap["cmdPipe"] = cmdPipe
+	funcMap["mapGet"] = mapGet
+	funcMap["listGet"] = listGet
 	return funcMap
 }
 
