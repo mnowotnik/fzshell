@@ -6,7 +6,7 @@
 
 set -u
 
-version=0.1.0
+version=0.2.0
 revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
