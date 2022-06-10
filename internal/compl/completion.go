@@ -27,8 +27,7 @@ type CompletionResult struct {
 }
 
 type CompletionOptions struct {
-	MatchMultipleSpaces bool
-	ReturnAll           bool
+	ReturnAll bool
 }
 
 type ComplResult int
@@ -50,7 +49,7 @@ func (c *Completion) MatchAndFind(line string, options CompletionOptions) ([]str
 		output.Log().Println(err)
 		return []string{}, Errored
 	}
-	matcher := matcher{pattern: c.Pattern, matchMultipleSpaces: options.MatchMultipleSpaces}
+	matcher := matcher{pattern: c.Pattern}
 	m, err := matcher.match(line)
 	if err != nil {
 		output.Log().Println(err)

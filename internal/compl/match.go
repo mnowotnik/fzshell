@@ -12,8 +12,7 @@ type MatchResult struct {
 }
 
 type matcher struct {
-	matchMultipleSpaces bool
-	pattern             string
+	pattern string
 }
 
 func newMatchResult(startIdx int, line string) *MatchResult {
@@ -29,11 +28,7 @@ func (m matcher) match(line string) (*MatchResult, error) {
 	var pattern *regexp.Regexp
 	var err error
 
-	if m.matchMultipleSpaces {
-		pattern, err = regexp.Compile(spaces.ReplaceAllString(m.pattern, " +") + "$")
-	} else {
-		pattern, err = regexp.Compile(m.pattern + "$")
-	}
+	pattern, err = regexp.Compile(m.pattern + "$")
 	if err != nil {
 		return nil, err
 	}

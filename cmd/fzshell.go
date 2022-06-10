@@ -17,13 +17,8 @@ const REP_START = "[["
 const REP_STOP = "]]"
 const DefaultItemSeparator = " "
 
-type Options struct {
-	MatchMultipleSpaces bool `default:"True" yaml:"matchMultipleSpaces"`
-}
-
 type Config struct {
 	Completions []compl.Completion `yaml:"completions"`
-	Options     Options            `yaml:"options"`
 }
 
 type lineInfo struct {
@@ -105,8 +100,7 @@ func Run(version string, revision string) int {
 	}
 	for _, completion := range config.Completions {
 		options := compl.CompletionOptions{
-			MatchMultipleSpaces: config.Options.MatchMultipleSpaces,
-			ReturnAll:           args.AllItems,
+			ReturnAll: args.AllItems,
 		}
 		result, code := completion.MatchAndFind(lineInfo.lBuffer, options)
 		switch code {

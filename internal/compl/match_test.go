@@ -17,21 +17,12 @@ func TestMatch(t *testing.T) {
 
 	r, err = m.match("foo bar  xyz")
 	assert.NoError(err)
-	assert.Nil(r, "pattern does not match extra space (matchMultipleSpaces=false)")
-
-	m.matchMultipleSpaces = true
-	r, err = m.match("foo bar  xyz")
-	assert.NoError(err)
-	assert.NotNil(r, "pattern matches extra space (matchMultipleSpaces=true) ")
-
-	r, err = m.match("foo  bar   xyz")
-	assert.NoError(err)
-	assert.NotNil(r, "pattern matches extra spaces (matchMultipleSpaces=true) ")
+	assert.Nil(r, "pattern does not match extra space")
 }
 
 func TestMatchReturnsRightMostResult(t *testing.T) {
 	assert := assert.New(t)
-	c := matcher{pattern: "([fb]oo)", matchMultipleSpaces: true}
+	c := matcher{pattern: "([fb]oo)"}
 	r, _ := c.match("foo boo")
 	assert.Equal(4, r.startIdx, "starts at 'b'")
 	assert.Equal(r.subExp[0], "boo")
@@ -39,7 +30,7 @@ func TestMatchReturnsRightMostResult(t *testing.T) {
 
 func TestMatchNamedSubExps(t *testing.T) {
 	assert := assert.New(t)
-	c := matcher{pattern: "(?P<bar>bar)", matchMultipleSpaces: true}
+	c := matcher{pattern: "(?P<bar>bar)"}
 	r, _ := c.match("bar xyz bar")
 	assert.Equal(8, r.startIdx, "starts at the second 'b'")
 	assert.Equal("bar", r.subExpNamed["bar"])
