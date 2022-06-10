@@ -44,4 +44,4 @@ jobs:
           goarch: ${{ matrix.goarch }}
           binary_name: "fzshell"
           ldflags: > 
-            -s -w -X main.version=${FZSHELL_VERSION} -X main.revision=${SHORT_COMMIT}
+            -s -w -X main.version=${{ env.FZSHELL_VERSION }} -X main.revision=${{ env.SHORT_COMMIT }}
