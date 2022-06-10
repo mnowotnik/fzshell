@@ -1,8 +1,7 @@
 #!/bin/bash
 export FZSHELL_BIN="$(dirname "${BASH_SOURCE[0]}")/fzshell"
 fuzzycompl_widget() {
-    local completion
-    IFS= read -r -d '' completion < <("$FZSHELL_BIN" "${READLINE_LINE}" $READLINE_POINT)
+    local completion=$("$FZSHELL_BIN" "${READLINE_LINE}" $READLINE_POINT)
 
     local ret=$?
     if [[ $ret != 0 ]]; then

@@ -1,12 +1,9 @@
 #!/usr/bin/zsh
 export FZSHELL_BIN="${0:a:h}/fzshell"
 fzshell_widget() {
-    # autoload -U split-shell-arguments
-    # local reply REPLY REPLY2
-    # split-shell-arguments
     emulate -L zsh
     local completion
-    IFS= read -r -d '' completion < <($FZSHELL_BIN "$BUFFER" $CURSOR)
+    completion=$($FZSHELL_BIN --cursor $CURSOR "$BUFFER")
     if [[ $? != 0 ]]; then
         return 1
     fi
