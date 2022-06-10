@@ -1,4 +1,4 @@
-.PHONY: test test-cover cover-report
+SHELL := bash
 
 test:
 	go test -v ./...
@@ -9,3 +9,4 @@ test-cover:
 cover-report:
 	go tool cover -html=cover.out
 
+.PHONY: test test-cover cover-report

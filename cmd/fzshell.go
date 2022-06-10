@@ -44,15 +44,24 @@ func parseLine(lineBuffer string, chCursorPos int) (lineInfo, error) {
 	return lineInfo{lineBuffer[0:chCursorPos], lineBuffer[chCursorPos:]}, nil
 }
 
-func Run() int {
+func Run(version string, revision string) int {
 
 	var args struct {
-		LineBuffer string `arg:"required,positional" help:"Current line buffer or '-' to read from stdin."`
+		LineBuffer string `arg:"positional" help:"Current line buffer or '-' to read from stdin."`
 		CursorPos  int    `arg:"--cursor" help:"Cursor position in the line buffer" default:"-1"`
 		AllItems   bool   `arg:"--all" help:"Print all results instead of running finder"`
 		ConfigPath string `arg:"-c,--config" help:"Path to a configuration file"`
+		Version    bool   `arg:"-v,--version" help:"Print fzshell version"`
 	}
-	arg.MustParse(&args)
+	p := arg.MustParse(&args)
+	if args.Version {
+		fmt.Printf("%s (%s)\n", version, revision)
+		return 0
+	}
+	if args.LineBuffer == "" {
+		p.Fail("line buffer is required")
+		return 1
+	}
 	lineBuffer := args.LineBuffer
 	chCursorPos := args.CursorPos
 	if lineBuffer == "-" {

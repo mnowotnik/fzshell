@@ -6,23 +6,32 @@ on:
       - "*"
 
 jobs:
-  test:
-    uses: ./.github/workflows/test.yml
   release:
     name: Release Go Binary
-    build:
-      needs: [test]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, darwin]
+        goos: [linux, darwin, freebsd, openbsd, windows]
         goarch: [amd64, arm64]
+        exclude:
+          - goos: freebsd
+            goarch: arm64
+          - goos: openbsd
+            goarch: arm64
     steps:
-    - uses: actions/checkout@v3
-    - uses: wangyoucao577/go-release-action@v1.28
-      with:
-        goversion: 1.18
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        goos: ${{ matrix.goos }}
-        goarch: ${{ matrix.goarch }}
-        binary_name: "fzshell"
+      - uses: actions/checkout@v3
+      - name: set short commit
+        id: short_commit
+        run: echo "SHORT_COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: set version
+        id: version
+        run: echo "FZSHELL_VERSION=$(git describe --abbrev=0 2> /dev/null)" >> $GITHUB_ENV
+      - uses: wangyoucao577/go-release-action@v1.28
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goversion: 1.18
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          binary_name: "fzshell"
+          ldflags: > 
+            -s -w -X main.version=${FZSHELL_VERSION} -X main.revision=${SHORT_COMMIT}
