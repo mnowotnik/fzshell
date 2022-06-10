@@ -8,7 +8,7 @@ command to generate completion list. It can even insert a completion at any poin
 
 https://user-images.githubusercontent.com/8244123/173105717-e22d4c82-7d38-4c9f-8da3-8b3d75b111d3.mov
 
-This can be accomplished by a few lines:
+This can be accomplished with a few lines:
 
 ```yml
 completions:
