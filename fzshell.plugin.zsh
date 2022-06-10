@@ -1,5 +1,7 @@
 #!/usr/bin/zsh
-export FZSHELL_BIN="${0:a:h}/fzshell"
+if [[ -z $FZSHELL_BIN ]]; then
+    export FZSHELL_BIN="${0:a:h}/fzshell"
+fi
 fzshell_widget() {
     emulate -L zsh
     local completion
@@ -15,5 +17,9 @@ fzshell_widget() {
 }
 
 zle -N fzshell_widget
-bindkey "^n" fzshell_widget
+if [[ -n $FZSHELL_BIND_KEY ]]; then
+    bindkey "$FZSHELL_BIND_KEY" fzshell_widget
+else
+    bindkey "^n" fzshell_widget
+fi
 # vim:ft=zsh:sw=2:

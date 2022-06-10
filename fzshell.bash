@@ -1,7 +1,10 @@
 #!/bin/bash
-export FZSHELL_BIN="$(dirname "${BASH_SOURCE[0]}")/fzshell"
+if [[ -z $FZSHELL_BIN ]]; then
+    export FZSHELL_BIN="$(dirname "${BASH_SOURCE[0]}")/fzshell"
+fi
 fuzzycompl_widget() {
-    local completion=$("$FZSHELL_BIN" "${READLINE_LINE}" $READLINE_POINT)
+    local completion=$("$FZSHELL_BIN" --cursor $READLINE_POINT "${READLINE_LINE}")
+    READLINE_LINE="XXX"
 
     local ret=$?
     if [[ $ret != 0 ]]; then
@@ -14,5 +17,9 @@ fuzzycompl_widget() {
     READLINE_POINT=${#completion}
 }
 
-bind -x '"\C-n": "fuzzycompl_widget"'
+if [[ -n $FZSHELL_BIND_KEY ]]; then
+    bind -x "\"${FZSHELL_BIND_KEY}\": \"fuzzycompl_widget\""
+else
+    bind -x '"\C-n": "fuzzycompl_widget"'
+fi
 # vim:ft=bash:sw=2:
