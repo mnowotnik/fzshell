@@ -26,7 +26,12 @@ jobs:
       - name: set version
         id: version
         run: echo "FZSHELL_VERSION=$(git describe --abbrev=0 2> /dev/null)" >> $GITHUB_ENV
-      - uses: wangyoucao577/go-release-action@v1.28
+      - name: Create Release
+        uses: ncipollo/release-action@v1.7.3
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and upload artifacts
+        uses: wangyoucao577/go-release-action@v1.28
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goversion: 1.18
