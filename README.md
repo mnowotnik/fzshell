@@ -34,7 +34,7 @@ partially by fzshell. It divides completions generation into familiar steps,
 namely: matching, mapping and filtering. A user only has to provide logic for
 those steps and doesn't have to worry about wiring it all together and edge
 cases.  Check out the
-[gallery](https://github.com/mnowotnik/fzshell/wiki/Gallery) of examples to get ideas on how fzshell can help you.
+[gallery](https://github.com/mnowotnik/fzshell/wiki/Examples) of examples to get ideas on how fzshell can help you.
 
 ## Quickstart
 
