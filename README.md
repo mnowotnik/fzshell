@@ -12,7 +12,7 @@ This can be accomplished with a few lines:
 
 ```yml
 completions:
-  - pattern: "jq '?(\.[^']*)'? (\w+.json)"
+  - pattern: "jq '?(\\.[^']*)'? (\\w+.json)"
     replacement: jq '{{ .item }}' {{ ._2 }}
     cmd: 'jq $1 $2 | jq keys | jq  ". []"'
     map: '{{ ._1 }}{{ printf "[%s]" .item }}'
