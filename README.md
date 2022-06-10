@@ -42,7 +42,7 @@ cases.  Check out the
 
 #### using git
 
-Execute these line to install fzshell on your computer.
+Execute these lines to install fzshell on your computer.
 
 ```bash
 git clone https://github.com/mnowotnik/fzshell ~/.fzshell
@@ -72,12 +72,14 @@ zplug "mnowotnik/fzshell", hook-build:"./scripts/install.sh"
 ### Basic configuration
 
 fzshell needs a configuration file to load completion definitions.
-By default, it loads them from: **~/.config/fzshell/fzshell.yaml**
+By default, it loads them from: 
+
+**~/.config/fzshell/fzshell.yaml**
 
 However, this can be changed by the variable `$FZSHELL_CONFIG` that should
 point to a valid configuration.
 
-Below you can see an example configuration file:
+Below, you can see an example configuration file:
 
 ```yml
 completions:
