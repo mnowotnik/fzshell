@@ -50,15 +50,7 @@ cd ~/.fzshell/
 ./scripts/install.sh
 ```
 
-Then add initialization to your `.zshrc` or `.bashrc`:
-
-```bash
-source ~/.fzshell/fzshell.bash # for bash
-```
-
-```bash
-source ~/.fzshell/fzshell.plugin.zsh # for zsh
-```
+Then follow printed instructions.
 
 #### using plugin manager
 
