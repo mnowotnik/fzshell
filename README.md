@@ -34,7 +34,7 @@ partially by fzshell. It divides completions generation into familiar steps,
 namely: matching, mapping and filtering. A user only has to provide logic for
 those steps and doesn't have to worry about wiring it all together and edge
 cases.  Check out the
-[gallery](https://github.com/mnowotnik/fzshell/wiki/Examples) of examples to get ideas on how fzshell can help you.
+[gallery of examples](https://github.com/mnowotnik/fzshell/wiki/Examples) to get ideas on how fzshell can help you.
 
 ## Quickstart
 
@@ -104,7 +104,7 @@ Visit [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for a comp
 ## Usage
 
 The hardest part of using fzshell is writing a correct configuration.
-When that's the case, all you need to do is press `Ctrl-n` when a cursor is just
+In that the case, all you need to do is press `Ctrl-n` when a cursor is just
 after a matching pattern.
 
 Let's consider the example above. Assume the command line looks like this:
@@ -130,7 +130,6 @@ pattern: "jq '?(\\.[^']*)'? (\\w+.json) *"
 By default the completion will be inserted at the cursor position, however you
 can have complete control over the insertion by defining the `replacement` template. It *replaces* the left part of the line buffer (meaning: to the
 left of the cursor). Check [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for more details.
-
 
 ## On the way to 1.0.0
 
