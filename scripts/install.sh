@@ -1,24 +1,48 @@
 #!/usr/bin/env bash
 
 # Attribution: https://github.com/junegunn/fzshell/blob/master/install
-# License: https://github.com/junegunn/fzshell/blob/master/LICENSE
+# License (MIT): https://github.com/junegunn/fzshell/blob/master/LICENSE
 # modified for fzshell
 
 set -u
+STYLE='\e[1;4m'
+NOCOLOR='\033[0m'
 
 version=0.2.0
 revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
 
+ask() {
+  while true; do
+    read -p "$1 ([y]/n) " -r
+    REPLY=${REPLY:-"y"}
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      return 1
+    elif [[ $REPLY =~ ^[Nn]$ ]]; then
+      return 0
+    fi
+  done
+}
+
 try_curl() {
-  command -v curl > /dev/null &&
-  curl -# -fL $1 | tar -xzf -
+  command -v curl >/dev/null &&
+    if [[ $1 =~ tar.gz$ ]]; then
+      curl -fL $1 | tar -xzf -
+    else
+      local temp=${TMPDIR:-/tmp}/fzf.zip
+      curl -fLo "$temp" $1 && unzip -o "$temp" && rm -f "$temp"
+    fi
 }
 
 try_wget() {
-  command -v wget > /dev/null &&
-  wget -O - $1 | tar -xzf -
+  command -v wget >/dev/null &&
+    if [[ $1 =~ tar.gz$ ]]; then
+      wget -O - $1 | tar -xzf -
+    else
+      local temp=${TMPDIR:-/tmp}/fzf.zip
+      wget -O "$temp" $1 && unzip -o "$temp" && rm -f "$temp"
+    fi
 }
 
 check_binary() {
@@ -82,17 +106,17 @@ archi=$(uname -sm)
 binary_available=1
 binary_error=""
 case "$archi" in
-Darwin\ arm64) download fzshell-$version-darwin-arm64.zip ;;
-Darwin\ x86_64) download fzshell-$version-darwin-amd64.zip ;;
+Darwin\ arm64) download fzshell-$version-darwin-arm64.tar.gz ;;
+Darwin\ x86_64) download fzshell-$version-darwin-amd64.tar.gz ;;
 Linux\ armv8*) download fzshell-$version-linux-arm64.tar.gz ;;
 Linux\ aarch64*) download fzshell-$version-linux-arm64.tar.gz ;;
 Linux\ *64) download fzshell-$version-linux-amd64.tar.gz ;;
 FreeBSD\ *64) download fzshell-$version-freebsd-amd64.tar.gz ;;
 OpenBSD\ *64) download fzshell-$version-openbsd-amd64.tar.gz ;;
-CYGWIN*\ *64) download fzshell-$version-windows-amd64.zip ;;
-MINGW*\ *64) download fzshell-$version-windows-amd64.zip ;;
-MSYS*\ *64) download fzshell-$version-windows-amd64.zip ;;
-Windows*\ *64) download fzshell-$version-windows-amd64.zip ;;
+CYGWIN*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
+MINGW*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
+*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
+Windows*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
 *) binary_available=0 binary_error=1 ;;
 esac
 
@@ -102,7 +126,7 @@ if [ -n "$binary_error" ]; then
   else
     echo "  - $binary_error !!!"
   fi
-  if command -v go > /dev/null; then
+  if command -v go >/dev/null; then
     if go build -ldflags "-s -w -X main.version=$version -X main.revision=$revision"; then
       echo "OK"
     else
@@ -113,4 +137,55 @@ if [ -n "$binary_error" ]; then
     echo "go executable not found. Installation failed."
     exit 1
   fi
+fi
+
+other_setup() {
+  if [[ -n "${BASH_VERSION:-}" ]]; then
+    echo "Add the following line to your .bashrc:"
+    echo -e ${STYLE}source "\"${base_dir}/fzshell.bash\""$NOCOLOR
+    echo
+  elif [[ -n "${ZSH_VERSION:-}" ]]; then
+    echo "Add the following line to your .zshrc, if you don't use plugin manager:"
+    echo -e ${STYLE}source \""${base_dir}/fzshell.plugin.zsh${NOCOLOR}"\"
+    echo
+  else
+    echo "I'm sorry. Your shell is not supported at the moment."
+  fi
+}
+
+fish_setup() {
+  local fish_dir=${XDG_CONFIG_HOME:-$HOME/.config}/fish/conf.d
+  local fish_binding="${fish_dir}/fzshell_key_bindings.fish"
+  local fish_binding_src="${base_dir}/fzshell.fish"
+  if [[ "$1" -eq 1 ]]; then
+    mkdir -p "${fish_dir}/functions"
+    echo -n "Creating init script ${fish_binding}..."
+    echo
+    rm -f "$fish_binding"
+    cp "${fish_binding_src}" "${fish_binding}" && echo "OK" || echo "Failed"
+
+    cat >> "${fish_binding}" << EOF
+
+if test -z "\$FZSHELL_BIN"
+    set FZSHELL_BIN $base_dir/fzshell
+end
+EOF
+
+  else
+    echo -n "Removing $fish_binding ... "
+    rm -f "$fish_binding"
+    echo "OK"
+    echo
+    echo Add this line your config.fish:
+    echo -e ${STYLE}source \"${fish_binding_src}\"${NOCOLOR}
+    echo
+  fi
+}
+if command -v fish &> /dev/null; then
+  ask "Do you want to install key bindings for fish?"
+  fish_setup $?
+fi
+
+if ! [[ $SHELL =~ fish ]]; then
+  other_setup
 fi
