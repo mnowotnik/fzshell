@@ -1,6 +1,6 @@
 SHELL := bash
 
-VERSION := $(shell git describe --tags --abbrev=0 2> /dev/null)
+VERSION := $(shell git describe --tags --abbrev=0 2> /dev/null| sed 's/v//g' )
 ifeq ($(VERSION),)
 $(error Not on git repository; cannot determine $$VERSION)
 endif
