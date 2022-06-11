@@ -8,7 +8,7 @@ set -u
 STYLE='\e[1;4m'
 NOCOLOR='\033[0m'
 
-version=0.3.1
+version=0.3.2
 revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
