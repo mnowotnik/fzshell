@@ -85,7 +85,7 @@ download() {
   link_fzshell_in_path && return
 
   local url
-  url=https://github.com/mnowotnik/fzshell/releases/download/$version/${1}
+  url=https://github.com/mnowotnik/fzshell/releases/download/v$version/${1}
   set -o pipefail
   if ! (try_curl $url || try_wget $url); then
     set +o pipefail
@@ -106,17 +106,17 @@ archi=$(uname -sm)
 binary_available=1
 binary_error=""
 case "$archi" in
-Darwin\ arm64) download fzshell-$version-darwin-arm64.tar.gz ;;
-Darwin\ x86_64) download fzshell-$version-darwin-amd64.tar.gz ;;
-Linux\ armv8*) download fzshell-$version-linux-arm64.tar.gz ;;
-Linux\ aarch64*) download fzshell-$version-linux-arm64.tar.gz ;;
-Linux\ *64) download fzshell-$version-linux-amd64.tar.gz ;;
-FreeBSD\ *64) download fzshell-$version-freebsd-amd64.tar.gz ;;
-OpenBSD\ *64) download fzshell-$version-openbsd-amd64.tar.gz ;;
-CYGWIN*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
-MINGW*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
-*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
-Windows*\ *64) download fzshell-$version-windows-amd64.tar.gz ;;
+Darwin\ arm64) download fzshell-v$version-darwin-arm64.tar.gz ;;
+Darwin\ x86_64) download fzshell-v$version-darwin-amd64.tar.gz ;;
+Linux\ armv8*) download fzshell-v$version-linux-arm64.tar.gz ;;
+Linux\ aarch64*) download fzshell-v$version-linux-arm64.tar.gz ;;
+Linux\ *64) download fzshell-v$version-linux-amd64.tar.gz ;;
+FreeBSD\ *64) download fzshell-v$version-freebsd-amd64.tar.gz ;;
+OpenBSD\ *64) download fzshell-v$version-openbsd-amd64.tar.gz ;;
+CYGWIN*\ *64) download fzshell-v$version-windows-amd64.tar.gz ;;
+MINGW*\ *64) download fzshell-v$version-windows-amd64.tar.gz ;;
+*\ *64) download fzshell-v$version-windows-amd64.tar.gz ;;
+Windows*\ *64) download fzshell-v$version-windows-amd64.tar.gz ;;
 *) binary_available=0 binary_error=1 ;;
 esac
 
