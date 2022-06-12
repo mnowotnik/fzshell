@@ -49,15 +49,16 @@ check_binary() {
   echo -n "  - Checking fzshell executable ... "
   local output
   output=$("$base_dir/fzshell" "--version" 2>&1)
+
   if [ $? -ne 0 ]; then
     echo "Error: $output"
     binary_error="Invalid binary"
   else
-    if [ "$version" != "${output% *}" ]; then
-      echo "$output != $version"
+    if [ "v$version" != "${output% *}" ]; then
+      echo "${output% *} != v$version"
       binary_error="Invalid version"
     else
-      echo "$output"
+      echo "$output" OK
       binary_error=""
       return 0
     fi
@@ -127,6 +128,7 @@ if [ -n "$binary_error" ]; then
     echo "  - $binary_error !!!"
   fi
   if command -v go >/dev/null; then
+    echo "Attempting to build from source..."
     if go build -ldflags "-s -w -X main.version=$version -X main.revision=$revision"; then
       echo "OK"
     else
