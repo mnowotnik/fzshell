@@ -20,6 +20,8 @@ completions:
       {{ shell "jq '" .item "' " ._2 }}
 ```
 
+If you find fzshell useful, consider giving it a star. Appreciated!
+
 ## Why?
 
 fzshell was born out of my frustration with performing the same manual tasks
