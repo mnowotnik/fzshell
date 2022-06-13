@@ -40,7 +40,7 @@ cases.  Check out the
 
 ## Want to show your completion definitions? Need help?
 
-Visit [Discussion](https://github.com/mnowotnik/fzshell/discussions)!
+Visit [Discussions](https://github.com/mnowotnik/fzshell/discussions)!
 
 You can get your questions (probably) answered in [🙏 Questions & Answers ](https://github.com/mnowotnik/fzshell/discussions/categories/questions-answers).
 
