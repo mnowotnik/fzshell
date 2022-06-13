@@ -11,12 +11,6 @@ import (
 	"github.com/mnowotnik/fzshell/internal/output"
 )
 
-const LB_TOK = "{{"
-const RB_TOK = "}}"
-const REP_START = "[["
-const REP_STOP = "]]"
-const DefaultItemSeparator = " "
-
 type Config struct {
 	Completions []compl.Completion `yaml:"completions"`
 }

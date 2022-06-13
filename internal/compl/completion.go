@@ -3,7 +3,6 @@ package compl
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
 
 	"github.com/elliotchance/pie/v2"
@@ -163,8 +162,6 @@ func (c *Completion) finder(match *MatchResult, returnAll bool) ([]string, error
 	}
 	return result, nil
 }
-
-var spaces = regexp.MustCompile(" +")
 
 func (c *Completion) renderLBuffer(matchR *MatchResult, items []string) (string, error) {
 	var result string
