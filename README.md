@@ -38,9 +38,9 @@ those steps and doesn't have to worry about wiring it all together and edge
 cases.  Check out the
 [gallery of examples](https://github.com/mnowotnik/fzshell/wiki/Examples) to get ideas on how fzshell can help you.
 
-## Want to show your completion definitions? Need help?
+## Want to show your completion definitions 🦚? Need help ❓
 
-Visit [Discussions](https://github.com/mnowotnik/fzshell/discussions)!
+Visit [🗨️ Discussions](https://github.com/mnowotnik/fzshell/discussions)!
 
 You can get your questions (probably) answered in [🙏 Questions & Answers ](https://github.com/mnowotnik/fzshell/discussions/categories/questions-answers).
 
