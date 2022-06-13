@@ -3,12 +3,11 @@ if [[ -z $FZSHELL_BIN ]]; then
     export FZSHELL_BIN="$(dirname "${BASH_SOURCE[0]}")/fzshell"
 fi
 fuzzycompl_widget() {
-    local completion=$("$FZSHELL_BIN" --cursor $READLINE_POINT "${READLINE_LINE}")
-    READLINE_LINE="XXX"
-
-    local ret=$?
+    local ret
+    local completion=$("$FZSHELL_BIN" --cursor $READLINE_POINT "${READLINE_LINE}" 2>&1; ret=$?)
     if [[ $ret != 0 ]]; then
-        return $ret
+        echo fzshell: $completion
+        return 1
     fi
     if [[ -z $completion ]]; then
         return

@@ -5,7 +5,16 @@ function fzshell-widget
   if test -z "$line"
     return 0
   end
-  set -l lbuffer ("$FZSHELL_BIN" --cursor "$cursor" "$line")
+  set -l ret
+  set -l lbuffer ("$FZSHELL_BIN" --cursor "$cursor" "$line" 2>&1; set ret $status)
+  if [ $ret != 0 ]
+    echo \n$lbuffer
+    commandline -f repaint
+    return 1
+  end
+  if test -z "$line"
+    return
+  end
   set -l cursor  (math $cursor + 1)
   set -l rbuffer (string sub -s$cursor $line)
   commandline -- $lbuffer$rbuffer

@@ -5,15 +5,18 @@ fi
 fzshell_widget() {
     emulate -L zsh
     local completion
-    completion=$($FZSHELL_BIN --cursor $CURSOR "$BUFFER")
+    completion=$($FZSHELL_BIN --cursor $CURSOR "$BUFFER" 2>&1)
     if [[ $? != 0 ]]; then
+        zle -I 
+        echo fzshell: $completion
         return 1
     fi
-    if [[ -n $completion ]]; then
-        LBUFFER="$completion"
-        zle reset-prompt
+    if [[ -z "$completion" ]]; then
+        return
     fi
-    return
+
+    LBUFFER="$completion"
+    zle reset-prompt
 }
 
 zle -N fzshell_widget
