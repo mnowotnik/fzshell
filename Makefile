@@ -15,7 +15,9 @@ lint:
 test-cover:
 	go test -coverprofile=cover.out ./...
 
-cover-report:
+cover.out: test-cover
+
+cover-report: cover.out
 	go tool cover -html=cover.out
 
 precommit: test

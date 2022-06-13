@@ -133,6 +133,17 @@ By default the completion will be inserted at the cursor position, however you
 can have complete control over the insertion by defining the `replacement` template. It *replaces* the left part of the line buffer (meaning: to the
 left of the cursor). Check [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for more details.
 
+## Development
+
+Development setup is smooth and easy thanks to Go modules.
+
+- requirement: go version 1.18+
+- command: `go build`
+- manual testing: `source fzshell.bash/fzshell.fish/fzshell.plugin.zsh`
+- automatic tests: `make test`
+- linting: `make lint` (requires `staticcheck`)
+- coverage report: `make cover-report`
+
 ## On the way to 1.0.0
 
 fzshell is still in beta, however the specification is unlikely to change, unless
