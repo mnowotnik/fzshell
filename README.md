@@ -106,7 +106,7 @@ Visit [wiki](https://github.com/mnowotnik/fzshell/wiki/Configuration) for a comp
 ## Usage
 
 The hardest part of using fzshell is writing a correct configuration.
-In that the case, all you need to do is press `Ctrl-n` when a cursor is just
+If that is the case, all you need to do is press `Ctrl-n` when a cursor is just
 after a matching pattern.
 
 Let's consider the example above. Assume the command line looks like this:
