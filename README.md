@@ -1,6 +1,6 @@
 # fzshell
 
-[![Test](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml/badge.svg)](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml)
+[![Test](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml/badge.svg)](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml) [![Join the chat at https://gitter.im/fzshell/community](https://badges.gitter.im/fzshell/community.svg)](https://gitter.im/fzshell/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 fzshell is a fuzzy command line completer that fetches completions from sources
 predefined by a user. What does it mean? It means that now you can create custom completions for anything you want. All fzshell needs is a pattern to match and
