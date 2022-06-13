@@ -68,7 +68,7 @@ If you use package manager like [zplug](https://github.com/zplug/zplug) you
 just need to add the following line in your `.zshrc`:
 
 ```bash
-zplug "mnowotnik/fzshell", hook-build:"./scripts/install.sh"
+zplug "mnowotnik/fzshell", hook-build:"./scripts/install.sh --no-instructions"
 ```
 
 ### Basic configuration

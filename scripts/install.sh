@@ -12,6 +12,33 @@ version=0.3.4
 revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
+no_instructions=0
+
+help() {
+  cat <<EOF
+
+Installation script that either downloads or compiles fzshell binary. Then
+adds or prints instructions to add a shell initialization script.
+
+usage: $0 [OPTIONS]
+    --help               Show this message
+    --no-instructions    Do not print instructions to add lines to your shell config
+EOF
+}
+
+for opt in "$@"; do
+  case $opt in
+  --no-instructions)
+    no_instructions=1
+    ;;
+  *)
+    echo "Unknown option: $opt"
+    help
+    exit 1
+    ;;
+  esac
+
+done
 
 ask() {
   while true; do
@@ -142,6 +169,9 @@ if [ -n "$binary_error" ]; then
 fi
 
 other_setup() {
+  if [[ $no_instructions -eq 1 ]]; then
+    return
+  fi
   if [[ -n "${BASH_VERSION:-}" ]]; then
     echo "Add the following line to your .bashrc:"
     echo -e ${STYLE}source "\"${base_dir}/fzshell.bash\""$NOCOLOR
@@ -152,6 +182,7 @@ other_setup() {
     echo
   else
     echo "I'm sorry. Your shell is not supported at the moment."
+    echo
   fi
 }
 
@@ -161,12 +192,11 @@ fish_setup() {
   local fish_binding_src="${base_dir}/fzshell.fish"
   if [[ "$1" -eq 1 ]]; then
     mkdir -p "${fish_dir}/functions"
-    echo -n "Creating init script ${fish_binding}..."
-    echo
+    echo "Creating init script ${fish_binding}..."
     rm -f "$fish_binding"
     cp "${fish_binding_src}" "${fish_binding}" && echo "OK" || echo "Failed"
 
-    cat >> "${fish_binding}" << EOF
+    cat >>"${fish_binding}" <<EOF
 
 if test -z "\$FZSHELL_BIN"
     set FZSHELL_BIN $base_dir/fzshell
@@ -174,16 +204,21 @@ end
 EOF
 
   else
-    echo -n "Removing $fish_binding ... "
-    rm -f "$fish_binding"
-    echo "OK"
-    echo
-    echo Add this line your config.fish:
+    if [[ -e "$fish_binding" ]]; then
+      echo -n "Removing $fish_binding ... "
+      rm -f "$fish_binding"
+      echo "OK"
+      echo
+    fi
+    if [[ $no_instructions -eq 1 ]]; then
+      return
+    fi
+    echo Add this line to your config.fish:
     echo -e ${STYLE}source \"${fish_binding_src}\"${NOCOLOR}
     echo
   fi
 }
-if command -v fish &> /dev/null; then
+if command -v fish &>/dev/null; then
   ask "Do you want to install key bindings for fish?"
   fish_setup $?
 fi
