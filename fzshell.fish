@@ -1,3 +1,6 @@
+if test -z "$FZSHELL_BIN"
+    set FZSHELL_BIN (dirname (readlink -f (status --current-filename)))/fzshell
+end
 
 function fzshell-widget
   set -l cursor (commandline -C)

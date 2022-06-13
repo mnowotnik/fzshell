@@ -192,15 +192,9 @@ fish_setup() {
   local fish_binding_src="${base_dir}/fzshell.fish"
   if [[ "$1" -eq 1 ]]; then
     mkdir -p "${fish_dir}/functions"
-    echo "Creating init script ${fish_binding}..."
+    echo "Symlinking init script ${fish_binding}..."
     rm -f "$fish_binding"
-    cp "${fish_binding_src}" "${fish_binding}" && echo "OK" || echo "Failed"
-
-    cat >>"${fish_binding}" <<EOF
-
-if test -z "\$FZSHELL_BIN"
-    set FZSHELL_BIN $base_dir/fzshell
-end
+    ln -sf "${fish_binding_src}" "${fish_binding}" && echo "OK" || echo "Failed"
 EOF
 
   else
