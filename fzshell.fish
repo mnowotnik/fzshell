@@ -12,7 +12,7 @@ function fzshell-widget
     commandline -f repaint
     return 1
   end
-  if test -z "$line"
+  if test -z "$lbuffer"
     return
   end
   set -l cursor  (math $cursor + 1)
