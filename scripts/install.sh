@@ -191,12 +191,12 @@ fish_setup() {
   local fish_binding="${fish_dir}/fzshell_key_bindings.fish"
   local fish_binding_src="${base_dir}/fzshell.fish"
   if [[ "$1" -eq 1 ]]; then
-    mkdir -p "${fish_dir}/functions"
-    echo "Symlinking init script ${fish_binding}..."
+    echo "Copying key bindings script to ${fish_binding}..."
     rm -f "$fish_binding"
-    ln -sf "${fish_binding_src}" "${fish_binding}" && echo "OK" || echo "Failed"
-EOF
-
+    cp "${fish_binding_src}" "${fish_binding}" && 
+    sed -i "/#to-be-replaced/c\  set FZSHELL_BIN \"$base_dir/fzshell\"" "${fish_binding}" &&
+    echo "OK" || 
+    echo "Failed"
   else
     if [[ -e "$fish_binding" ]]; then
       echo -n "Removing $fish_binding ... "

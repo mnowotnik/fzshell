@@ -1,5 +1,5 @@
 if test -z "$FZSHELL_BIN"
-    set FZSHELL_BIN (dirname (readlink -f (status --current-filename)))/fzshell
+    set FZSHELL_BIN (dirname (status --current-filename))/fzshell #to-be-replaced
 end
 
 function fzshell-widget
