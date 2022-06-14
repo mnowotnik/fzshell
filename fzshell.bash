@@ -16,9 +16,17 @@ fuzzycompl_widget() {
     READLINE_POINT=${#completion}
 }
 
+__bind_fzshell_key() {
+    bind -m vi-command -x "\"${1}\": \"fuzzycompl_widget\""
+    bind -m vi-insert -x "\"${1}\": \"fuzzycompl_widget\""
+    bind -m emacs-standard -x "\"${1}\": \"fuzzycompl_widget\""
+}
+
 if [[ -n $FZSHELL_BIND_KEY ]]; then
-    bind -x "\"${FZSHELL_BIND_KEY}\": \"fuzzycompl_widget\""
+    __bind_fzshell_key "$FZSHELL_BIND_KEY"
 else
-    bind -x '"\C-n": "fuzzycompl_widget"'
+    __bind_fzshell_key "\C-n"
 fi
+
+unset -f __bind_fzshell_key
 # vim:ft=bash:sw=2:
