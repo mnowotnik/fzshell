@@ -71,6 +71,12 @@ just need to add the following line in your `.zshrc`:
 zplug "mnowotnik/fzshell", hook-build:"./scripts/install.sh --no-instructions"
 ```
 
+[fisher](https://github.com/jorgebucaran/fisher) is also supported. Simply run:
+
+```bash
+fish install mnowotnik/fzshell
+```
+
 ### Basic configuration
 
 fzshell needs a configuration file to load completion definitions.
