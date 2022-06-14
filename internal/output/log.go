@@ -19,7 +19,7 @@ func Log() *logging.Logger {
 		return logger
 	}
 	terminalLogger := func() *logging.Logger {
-		logger = logging.New(os.Stderr, "", logging.LstdFlags)
+		logger = logging.New(os.Stdout, "[fzshell]  ", logging.LstdFlags)
 		return logger
 	}
 	if os.Getenv("FZSHELL_DEBUG") == "" {

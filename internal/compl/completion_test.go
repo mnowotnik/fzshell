@@ -73,15 +73,6 @@ func TestCompletionCmdTmpl(t *testing.T) {
 	assert.Equal(t, Matched, code)
 }
 
-func TestCompletionSingleResult(t *testing.T) {
-	c := NewCompletion("foo bar")
-	c.Command = "echo xyz"
-	c.SelectFirst = true
-	r, code := c.MatchAndFind("foo bar", CompletionOptions{})
-	assert.Equal(t, "foo barxyz", r[0])
-	assert.Equal(t, Matched, code)
-}
-
 func TestCompletionReturnAll(t *testing.T) {
 	c := NewCompletion("foo bar")
 	c.Command = "echo \"xyz\nxyz\nxyz\""
