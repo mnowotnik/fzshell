@@ -13,6 +13,7 @@ revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
 no_instructions=0
+install_fish_keys=0
 
 help() {
   cat <<EOF
@@ -23,6 +24,7 @@ adds or prints instructions to add a shell initialization script.
 usage: $0 [OPTIONS]
     --help               Show this message
     --no-instructions    Do not print instructions to add lines to your shell config
+    --install-fish-keys  Install fish key bindings without prompt
 EOF
 }
 
@@ -30,6 +32,9 @@ for opt in "$@"; do
   case $opt in
   --no-instructions)
     no_instructions=1
+    ;;
+  --install-fish-keys)
+    install_fish_keys=1
     ;;
   *)
     echo "Unknown option: $opt"
@@ -193,10 +198,10 @@ fish_setup() {
   if [[ "$1" -eq 1 ]]; then
     echo "Copying key bindings script to ${fish_binding}..."
     rm -f "$fish_binding"
-    cp "${fish_binding_src}" "${fish_binding}" && 
-    sed -i "/#to-be-replaced/c\  set FZSHELL_BIN \"$base_dir/fzshell\"" "${fish_binding}" &&
-    echo "OK" || 
-    echo "Failed"
+    cp "${fish_binding_src}" "${fish_binding}" &&
+      sed -i "/#to-be-replaced/c\  set FZSHELL_BIN \"$base_dir/fzshell\"" "${fish_binding}" &&
+      echo "OK" ||
+      echo "Failed"
   else
     if [[ -e "$fish_binding" ]]; then
       echo -n "Removing $fish_binding ... "
@@ -213,8 +218,12 @@ fish_setup() {
   fi
 }
 if command -v fish &>/dev/null; then
-  ask "Do you want to install key bindings for fish?"
-  fish_setup $?
+  if [ $install_fish_keys -eq 1 ]; then
+    fish_setup 1
+  else
+    ask "Do you want to install key bindings for fish?"
+    fish_setup $?
+  fi
 fi
 
 if ! [[ $SHELL =~ fish ]]; then
