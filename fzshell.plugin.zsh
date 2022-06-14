@@ -19,10 +19,18 @@ fzshell_widget() {
     zle reset-prompt
 }
 
+__bind_fzshell_key() {
+    bindkey -M emacs "$1" fzshell_widget
+    bindkey -M vicmd "$1" fzshell_widget
+    bindkey -M viins "$1" fzshell_widget
+}
+
 zle -N fzshell_widget
 if [[ -n $FZSHELL_BIND_KEY ]]; then
-    bindkey "$FZSHELL_BIND_KEY" fzshell_widget
+    __bind_fzshell_key "$FZSHELL_BIND_KEY"
 else
-    bindkey "^n" fzshell_widget
+    __bind_fzshell_key "^N"
 fi
+
+unfunction __bind_fzshell_key
 # vim:ft=zsh:sw=2:
