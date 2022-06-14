@@ -1,6 +1,6 @@
 #!/bin/bash
 if [[ -z $FZSHELL_BIN ]]; then
-    export FZSHELL_BIN="$(dirname "${BASH_SOURCE[0]}")/fzshell"
+    export FZSHELL_BIN="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fzshell"
 fi
 fuzzycompl_widget() {
     local ret
