@@ -74,7 +74,7 @@ zplug "mnowotnik/fzshell", hook-build:"./scripts/install.sh --no-instructions"
 [fisher](https://github.com/jorgebucaran/fisher) is also supported. Simply run:
 
 ```bash
-fish install mnowotnik/fzshell
+fisher install mnowotnik/fzshell
 ```
 
 ### Basic configuration
