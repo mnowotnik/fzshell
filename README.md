@@ -6,7 +6,7 @@ fzshell is a fuzzy command line completer that fetches completions from sources
 predefined by a user. What does it mean? It means that now you can create custom completions for anything you want. All fzshell needs is a pattern to match and
 command to generate completion list. It can even insert a completion at any point in a line, not just at the end. See for yourself:
 
-https://user-images.githubusercontent.com/8244123/173105717-e22d4c82-7d38-4c9f-8da3-8b3d75b111d3.mov
+https://user-images.githubusercontent.com/8244123/173870405-f67abf62-71fc-45e4-8557-4dec77ccd725.mov
 
 This can be accomplished with a few lines:
 
