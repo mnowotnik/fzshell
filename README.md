@@ -1,4 +1,5 @@
-# fzshell
+![fzshell](https://user-images.githubusercontent.com/8244123/173903365-72bc56e3-35db-478e-9f14-723ab5d3131a.jpg)
+
 
 [![Test](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml/badge.svg)](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml) [![Join the chat at https://gitter.im/fzshell/community](https://badges.gitter.im/fzshell/community.svg)](https://gitter.im/fzshell/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
