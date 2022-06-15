@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/sprig/v3 v3.0.2
 	github.com/alexflint/go-arg v1.4.3
 	github.com/goccy/go-yaml v1.9.5
-	github.com/mnowotnik/fzf v0.0.0-20220615153006-2dc1e40b3abc
+	github.com/mnowotnik/fzf v0.0.0-20220615160155-54fbb1630d0c
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.2
 )
@@ -22,7 +22,6 @@ require (
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/huandu/xstrings v1.2.0 // indirect
 	github.com/imdario/mergo v0.3.7 // indirect
-	github.com/junegunn/fzf v0.0.0-20220525005010-3b7a962dc6db // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

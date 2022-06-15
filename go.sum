@@ -33,8 +33,6 @@ github.com/huandu/xstrings v1.2.0 h1:yPeWdRnmynF7p+lLYz0H2tthW9lqhMJrQV/U7yy4wX0
 github.com/huandu/xstrings v1.2.0/go.mod h1:DvyZB1rfVYsBIigL8HwpZgxHwXozlTgGqn63UyNX5k4=
 github.com/imdario/mergo v0.3.7 h1:Y+UAYTZ7gDEuOfhxKWy+dvb5dRQ6rJjFSdX2HZY1/gI=
 github.com/imdario/mergo v0.3.7/go.mod h1:2EnlNZ0deacrJVfApfmtdGgDfMuh/nq6Ok1EcJh5FfA=
-github.com/junegunn/fzf v0.0.0-20220525005010-3b7a962dc6db h1:tdktdAvGbDi7H8HfWiUKwKC7/5+5c8+Rf00oKbOw3Dw=
-github.com/junegunn/fzf v0.0.0-20220525005010-3b7a962dc6db/go.mod h1:ULlcOfgZrrquadV8aTt+RuwQS8gOnlrWuJtD7neWAXs=
 github.com/leodido/go-urn v1.2.0 h1:hpXL4XnriNwQ/ABnpepYM/1vCLWNDfUNts8dX3xTG6Y=
 github.com/leodido/go-urn v1.2.0/go.mod h1:+8+nEpDfqqsY+g338gtMEUOtuK+4dEMhiQEgxpxOKII=
 github.com/lucasb-eyer/go-colorful v1.0.3/go.mod h1:R4dSotOR9KMtayYi1e77YzuveK+i7ruzyGqttikkLy0=
@@ -56,8 +54,8 @@ github.com/mitchellh/copystructure v1.0.0 h1:Laisrj+bAB6b/yJwB5Bt3ITZhGJdqmxquMK
 github.com/mitchellh/copystructure v1.0.0/go.mod h1:SNtv71yrdKgLRyLFxmLdkAbkKEFWgYaq1OVrnRcwhnw=
 github.com/mitchellh/reflectwalk v1.0.0 h1:9D+8oIskB4VJBN5SFlmc27fSlIBZaov1Wpk/IfikLNY=
 github.com/mitchellh/reflectwalk v1.0.0/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
-github.com/mnowotnik/fzf v0.0.0-20220615153006-2dc1e40b3abc h1:mbqHG6wDcLZrqaYnQTdFTN59a3VSEvjA6+v81rNx3OU=
-github.com/mnowotnik/fzf v0.0.0-20220615153006-2dc1e40b3abc/go.mod h1:p8WFbqC7evie6wVhbvJUm2KUqfGikbzuzY+uiPpbnVE=
+github.com/mnowotnik/fzf v0.0.0-20220615160155-54fbb1630d0c h1:T37f2h9nLALFpYY+tCI7tcMvs9jVk0LTCT8POiqk6IU=
+github.com/mnowotnik/fzf v0.0.0-20220615160155-54fbb1630d0c/go.mod h1:p8WFbqC7evie6wVhbvJUm2KUqfGikbzuzY+uiPpbnVE=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
