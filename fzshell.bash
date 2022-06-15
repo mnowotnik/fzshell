@@ -17,9 +17,9 @@ fuzzycompl_widget() {
 }
 
 __bind_fzshell_key() {
-    bind -m vi-command -x "\"${1}\": \"fuzzycompl_widget\""
-    bind -m vi-insert -x "\"${1}\": \"fuzzycompl_widget\""
-    bind -m emacs-standard -x "\"${1}\": \"fuzzycompl_widget\""
+    bind -m vi-command -x "\"${1}\": fuzzycompl_widget"
+    bind -m vi-insert -x "\"${1}\": fuzzycompl_widget"
+    bind -m emacs-standard -x "\"${1}\": fuzzycompl_widget"
 }
 
 if [[ -n $FZSHELL_BIND_KEY ]]; then
