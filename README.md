@@ -13,11 +13,9 @@ This can be accomplished with a few lines:
 ```yml
 completions:
   - pattern: "jq '?(\\.[^']*)'? (\\w+.json)"
-    replacement: jq '{{ .item }}' {{ ._2 }}
+    replacement: jq '{{._1}}[{{ .item }}]' {{._2}}
     cmd: 'jq $1 $2 | jq keys | jq  ". []"'
-    map: '{{ ._1 }}{{ printf "[%s]" .item }}'
-    preview: >
-      {{ shell "jq '" .item "' " ._2 }}
+    preview: jq -C '{{._1}}[{{.item}}]'  {{._2}}
 ```
 
 If you find fzshell useful, consider giving it a star. Appreciated!
@@ -91,10 +89,10 @@ Below, you can see an example configuration file:
 
 ```yml
 completions:
-  - pattern: "jq '?(\\.[^']*)'? (\\w+.json)"
-    replacement: jq '{{._1}}[{{ .item }}]' {{._2}}
-    cmd: 'jq $1 $2 | jq keys | jq  ". []"'
-    preview: jq -C '{{._1}}[{{.item}}]'  {{._2}}
+  - pattern: "docker rmi"
+    cmd: docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'
+    map: ' {{ .item | splitList "\t" | last }}'
+    preview: docker image inspect {{.item}}
 ```
 
 As you can see the completion definition here has several attributes:
