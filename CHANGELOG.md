@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.4.1
+
+Fixed fzf quirk that forced a user to take into account that preview items are always single quoted.
+Now `preview` does not differ from other fields in that regard.
+
 ## 0.4.0
 
 Since this is still beta officially this release introduces breaking changes to
