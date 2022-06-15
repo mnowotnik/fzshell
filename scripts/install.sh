@@ -7,6 +7,7 @@
 set -u
 STYLE='\e[1;4m'
 NOCOLOR='\033[0m'
+RED='\033[0;31m'
 
 version=0.3.5
 revision=$(git rev-parse --short HEAD)
@@ -14,6 +15,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
 no_instructions=0
 install_fish_keys=0
+
+echo -e ${RED}Warning! Breaking changes in configuration file in version 0.4
+echo -e Update your configuration file. See changelog for details:
+echo -e https://github.com/mnowotnik/fzshell/blob/master/CHANGELOG.md $NOCOLOR
+
 
 help() {
   cat <<EOF

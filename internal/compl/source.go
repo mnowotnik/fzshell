@@ -3,89 +3,56 @@ package compl
 import (
 	"os"
 	"os/exec"
-	"strings"
 
 	"text/template"
 
+	fzf "github.com/mnowotnik/fzf/src"
+	"github.com/mnowotnik/fzshell/internal/utils"
 	"github.com/pkg/errors"
 )
 
 type CompletionSource struct {
-	Command       string `yaml:"cmd"`
-	ItemTmpl      string `yaml:"map"`
-	ViewTmpl      string `yaml:"mapView"`
-	PreviewTmpl   string `yaml:"preview"`
-	FilterTmpl    string `yaml:"filter"`
-	LineSeparator string `yaml:"lineSeparator"`
-	HeaderLines   int    `yaml:"headerLines"`
-	PreferHeader  bool   `yaml:"selectHeader"`
+	Command      string      `yaml:"cmd"`
+	ItemTmpl     string      `yaml:"map"`
+	PreviewTmpl  string      `yaml:"preview"`
+	HeaderLines  int         `yaml:"headerLines"`
+	Header       interface{} `yaml:"header"`
+	SelectFirst  bool        `yaml:"selectFirst"`
+	PreferHeader bool        `yaml:"selectHeader"`
 }
 
-type CompletionEntry struct {
-	Item    string
-	View    string
-	Line    string
-	Preview *Preview
-}
+func (cs *CompletionSource) generateEntries(match *MatchResult, returnAll bool) ([]string, error) {
+	if cs.Command == "" {
+		return []string{}, nil
+	}
+	results, err := cs.pipeCommandToFzf(match.subExp, match.subExpNamed, returnAll)
 
-func (cs *CompletionSource) generateEntries(match *MatchResult) (CompletionResult, error) {
-	var items []string
-
-	out, err := executeInShell(cs.Command, match.subExp, match.subExpNamed)
+	if len(results) == 0 {
+		return results, nil
+	}
 
 	if err != nil {
-		return CompletionResult{}, errors.New(err.Error() + string(out))
-	}
-	if cs.LineSeparator == "" {
-		cs.LineSeparator = "\n"
-	}
-	items = strings.Split(out, cs.LineSeparator)
-	header := items[:cs.HeaderLines]
-	items = items[cs.HeaderLines:]
-
-	entries := []CompletionEntry{}
-	viewTmpl, err := createTemplate(cs.ViewTmpl)
-	if err != nil {
-		return CompletionResult{}, err
+		return nil, err
 	}
 
 	itemTmpl, err := createTemplate(cs.ItemTmpl)
 	if err != nil {
-		return CompletionResult{}, err
+		return nil, err
 	}
 
-	filterTmpl, err := createTemplate(cs.FilterTmpl)
-	if err != nil {
-		return CompletionResult{}, err
-	}
-
-	previewTmpl, err := createTemplate(cs.PreviewTmpl)
-	if err != nil {
-		return CompletionResult{}, err
-	}
-
-	tmplData := make(map[string]string)
-	for k, v := range match.subExpNamed {
-		tmplData[k] = v
-	}
-	for _, item := range items {
+	tmplData := utils.CloneMap(match.subExpNamed)
+	items := []string{}
+	for _, item := range results {
 		tmplData["item"] = item
 		if item == "" {
 			continue
-		}
-		if filterTmpl != nil {
-			if buf, err := renderFromTemplate(filterTmpl, match.subExp, tmplData); err != nil {
-				return CompletionResult{}, err
-			} else if buf.String() == "false" {
-				continue
-			}
 		}
 
 		var itemStr string
 
 		if cs.ItemTmpl != "" {
 			if buf, err := renderFromTemplate(itemTmpl, match.subExp, tmplData); err != nil {
-				return CompletionResult{}, err
+				return nil, err
 			} else {
 				itemStr = buf.String()
 			}
@@ -93,23 +60,9 @@ func (cs *CompletionSource) generateEntries(match *MatchResult) (CompletionResul
 			itemStr = item
 		}
 
-		var viewStr string
-		if cs.ViewTmpl != "" {
-			if buf, err := renderFromTemplate(viewTmpl, match.subExp, tmplData); err != nil {
-				return CompletionResult{}, err
-			} else {
-				viewStr = buf.String()
-			}
-		} else {
-			viewStr = item
-		}
-		var preview *Preview
-		if previewTmpl != nil {
-			preview = &Preview{PreviewTmpl: previewTmpl, MatchResult: match}
-		}
-		entries = append(entries, CompletionEntry{Item: itemStr, View: viewStr, Line: item, Preview: preview})
+		items = append(items, itemStr)
 	}
-	return CompletionResult{Header: header, Entries: entries}, nil
+	return items, nil
 }
 
 func createTemplate(tmplStr string) (*template.Template, error) {
@@ -123,8 +76,42 @@ func createTemplate(tmplStr string) (*template.Template, error) {
 	return nil, nil
 }
 
-func executeInShell(expr string, args []string, kwargs map[string]string) (string, error) {
-	expr = "set -o pipefail;" + expr
+func (cs *CompletionSource) pipeCommandToFzf(args []string, kwargs map[string]string, returnAll bool) ([]string, error) {
+	os.Setenv("FZF_DEFAULT_OPTS", "")
+	os.Args = []string{os.Args[0]}
+	options := fzf.ParseOptions()
+	if cs.PreviewTmpl != "" {
+		options.Preview.Command = cs.PreviewTmpl
+		kwargsC := utils.CloneMap(kwargs)
+		kwargsC["item"] = "{}"
+
+		previewTmpl, err := createTemplate(cs.PreviewTmpl)
+		if err != nil {
+			return nil, err
+		}
+		buf, err := renderFromTemplate(previewTmpl, args, kwargsC)
+		if err != nil {
+			return nil, err
+		}
+		options.Preview.Command = buf.String()
+		options.HeaderLines = cs.HeaderLines
+		if cs.Header != nil {
+			switch v := cs.Header.(type) {
+			case string:
+				options.Header = []string{v}
+			case []string:
+				options.Header = v
+			default:
+				return nil, errors.New("wrong value for 'header' key")
+			}
+		}
+		options.Select1 = cs.SelectFirst
+	}
+	if returnAll {
+		var filter string = ""
+		options.Filter = &filter
+	}
+	expr := "set -o pipefail;" + cs.Command
 	cArgs := []string{"-c", expr}
 	cArgs = append(cArgs, "/usr/bin/bash")
 	cArgs = append(cArgs, args...)
@@ -134,6 +121,14 @@ func executeInShell(expr string, args []string, kwargs map[string]string) (strin
 		env = append(env, k+"="+v)
 	}
 	cmd.Env = env
-	out, err := cmd.CombinedOutput()
-	return string(out), err
+
+	out, err := cmd.StdoutPipe()
+	results := []string{}
+
+	options.Printer = func(i string) {
+		results = append(results, i)
+	}
+	cmd.Start()
+	fzf.Run(options, out)
+	return results, err
 }

@@ -8,7 +8,7 @@ function fzshell-widget
   if test -z "$line"
     return 0
   end
-  set -l lbuffer ("$FZSHELL_BIN" --cursor "$cursor" "$line" 2>&1)
+  set -l lbuffer ("$FZSHELL_BIN" --cursor "$cursor" "$line")
   if [ $status != 0 ]
     echo \n$lbuffer
     commandline -f repaint

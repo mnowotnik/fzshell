@@ -103,7 +103,7 @@ func Run(version string, revision string) int {
 				for _, r := range result {
 					fmt.Println(r)
 				}
-			} else {
+			} else if len(result) > 0 {
 				fmt.Print(result[0])
 			}
 			return 0

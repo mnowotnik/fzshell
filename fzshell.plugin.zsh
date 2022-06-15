@@ -5,7 +5,7 @@ fi
 fzshell_widget() {
     emulate -L zsh
     local completion
-    completion=$($FZSHELL_BIN --cursor $CURSOR "$BUFFER" 2>&1)
+    completion=$($FZSHELL_BIN --cursor $CURSOR "$BUFFER")
     if [[ $? != 0 ]]; then
         zle -I 
         echo fzshell: $completion
