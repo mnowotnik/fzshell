@@ -91,17 +91,17 @@ Below, you can see an example configuration file:
 
 ```yml
 completions:
-  - pattern: "docker rmi"
-    cmd: "docker images --format '{{.Repository}}:{{.Tag}}\t{{.ID}}'"
-    map: ' {{ .item | splitList "\t" | last }}'
-    preview: '{{ shell "docker image inspect " .item }}'
+  - pattern: "jq '?(\\.[^']*)'? (\\w+.json)"
+    replacement: jq '{{._1}}[{{ .item }}]' {{._2}}
+    cmd: 'jq $1 $2 | jq keys | jq  ". []"'
+    preview: jq -C '{{._1}}[{{.item}}]'  {{._2}}
 ```
 
 As you can see the completion definition here has several attributes:
 
 - `pattern`  – regular expression [parsable by Go](https://pkg.go.dev/regexp). It can contain subexpressions (`(xxx)`) and named subexpressions (`(?P<foo>xxx)`)
 - `cmd` – Bash shell expression
-- `map` – Go [template expression](https://pkg.go.dev/text/template) that has access to [sprig](functions) and subexpression matches:
+- `map` – Go [template expression](https://pkg.go.dev/text/template) that has access to [sprig](https://masterminds.github.io/sprig/) and subexpression matches:
   - `.item` – whole line returned by the command in `cmd`
   - `._1`,`._2`,... – variables that store non-named subexpression matches
   - `.foo` – named subexpression matches

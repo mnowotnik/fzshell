@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/sprig/v3 v3.0.2
 	github.com/alexflint/go-arg v1.4.3
 	github.com/goccy/go-yaml v1.9.5
-	github.com/mnowotnik/fzf v0.0.0-20220614201839-d590acf55f66
+	github.com/mnowotnik/fzf v0.0.0-20220615153006-2dc1e40b3abc
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.2
 )

@@ -83,7 +83,7 @@ func (cs *CompletionSource) pipeCommandToFzf(args []string, kwargs map[string]st
 	if cs.PreviewTmpl != "" {
 		options.Preview.Command = cs.PreviewTmpl
 		kwargsC := utils.CloneMap(kwargs)
-		kwargsC["item"] = "{}"
+		kwargsC["item"] = "{d}"
 
 		previewTmpl, err := createTemplate(cs.PreviewTmpl)
 		if err != nil {
