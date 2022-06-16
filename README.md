@@ -1,4 +1,4 @@
-![fzshell2](https://user-images.githubusercontent.com/8244123/174027481-51cb9d99-97e9-4953-83ae-4bbc181c1925.jpg)
+![fzshell3](https://user-images.githubusercontent.com/8244123/174155451-1d57eb1b-0035-4ef1-83c1-4dd002b048b3.jpg)
 
 [![Test](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml/badge.svg)](https://github.com/mnowotnik/fzshell/actions/workflows/test.yml) [![Join the chat at https://gitter.im/fzshell/community](https://badges.gitter.im/fzshell/community.svg)](https://gitter.im/fzshell/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
