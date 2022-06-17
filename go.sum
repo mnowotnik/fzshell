@@ -54,8 +54,8 @@ github.com/mitchellh/copystructure v1.0.0 h1:Laisrj+bAB6b/yJwB5Bt3ITZhGJdqmxquMK
 github.com/mitchellh/copystructure v1.0.0/go.mod h1:SNtv71yrdKgLRyLFxmLdkAbkKEFWgYaq1OVrnRcwhnw=
 github.com/mitchellh/reflectwalk v1.0.0 h1:9D+8oIskB4VJBN5SFlmc27fSlIBZaov1Wpk/IfikLNY=
 github.com/mitchellh/reflectwalk v1.0.0/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
-github.com/mnowotnik/fzf v0.0.0-20220615160155-54fbb1630d0c h1:T37f2h9nLALFpYY+tCI7tcMvs9jVk0LTCT8POiqk6IU=
-github.com/mnowotnik/fzf v0.0.0-20220615160155-54fbb1630d0c/go.mod h1:p8WFbqC7evie6wVhbvJUm2KUqfGikbzuzY+uiPpbnVE=
+github.com/mnowotnik/fzf v0.0.0-20220617192912-adcb74e97d0f h1:3JpIAbK6JQ5ExyNd+8N53IsDVRZscxCP2DckGU5NK9A=
+github.com/mnowotnik/fzf v0.0.0-20220617192912-adcb74e97d0f/go.mod h1:p8WFbqC7evie6wVhbvJUm2KUqfGikbzuzY+uiPpbnVE=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

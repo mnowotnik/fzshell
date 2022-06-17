@@ -27,12 +27,12 @@ func (cs *CompletionSource) generateEntries(match *MatchResult, returnAll bool) 
 	}
 	results, err := cs.pipeCommandToFzf(match.subExp, match.subExpNamed, returnAll)
 
-	if len(results) == 0 {
-		return results, nil
-	}
-
 	if err != nil {
 		return nil, err
+	}
+
+	if len(results) == 0 {
+		return results, nil
 	}
 
 	itemTmpl, err := createTemplate(cs.ItemTmpl)
@@ -82,18 +82,21 @@ func (cs *CompletionSource) pipeCommandToFzf(args []string, kwargs map[string]st
 	options := fzf.ParseOptions()
 	if cs.PreviewTmpl != "" {
 		options.Preview.Command = cs.PreviewTmpl
-		kwargsC := utils.CloneMap(kwargs)
-		kwargsC["item"] = "{d}"
 
 		previewTmpl, err := createTemplate(cs.PreviewTmpl)
 		if err != nil {
 			return nil, err
 		}
-		buf, err := renderFromTemplate(previewTmpl, args, kwargsC)
-		if err != nil {
-			return nil, err
+
+		options.Preview.CommandGenerator = func(item string, query string) (string, error) {
+			kwargsC := utils.CloneMap(kwargs)
+			kwargsC["item"] = item
+			buf, err := renderFromTemplate(previewTmpl, args, kwargsC)
+			if err != nil {
+				return "", err
+			}
+			return buf.String(), nil
 		}
-		options.Preview.Command = buf.String()
 		options.HeaderLines = cs.HeaderLines
 		if cs.Header != nil {
 			switch v := cs.Header.(type) {

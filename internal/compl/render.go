@@ -46,11 +46,20 @@ func shell(cmd ...string) (string, error) {
 	return string(out), nil
 }
 
-func listGet(idx int, lst []interface{}) interface{} {
-	return lst[idx]
+func listGet(idx int, lst interface{}) (interface{}, error) {
+	lstVal, ok := lst.(reflect.Value)
+	if !ok {
+		lstVal = reflect.ValueOf(lst)
+	}
+	switch lstVal.Kind() {
+	case reflect.Slice, reflect.Array, reflect.String:
+		return lstVal.Index(idx).Interface(), nil
+	default:
+		return nil, errors.New("Cannot call listGet. Not a list!")
+	}
 }
 
-func mapGet(key interface{}, mmap interface{}) interface{} {
+func mapGet(key interface{}, mmap interface{}) (interface{}, error) {
 	mapVal, ok := mmap.(reflect.Value)
 	if !ok {
 		mapVal = reflect.ValueOf(mmap)
@@ -60,7 +69,12 @@ func mapGet(key interface{}, mmap interface{}) interface{} {
 	if !ok {
 		keyVal = reflect.ValueOf(key)
 	}
-	return mapVal.MapIndex(keyVal).Interface()
+	switch mapVal.Kind() {
+	case reflect.Map:
+		return mapVal.MapIndex(keyVal).Interface(), nil
+	default:
+		return nil, errors.New("Cannot call mapGet. Not a map!")
+	}
 }
 
 func getFuncMap() template.FuncMap {
