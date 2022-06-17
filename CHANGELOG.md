@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.4.2
+
+Fixed bugs in `preview`:
+
+- operations on .item in preview work like in other templates
+- listGet actually works
+- better errors for listGet and mapGet instead of panic
+
 ## 0.4.1
 
 Fixed fzf quirk that forced a user to take into account that preview items are always single quoted.
