@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"fmt"
@@ -18,6 +18,13 @@ type Config struct {
 type lineInfo struct {
 	lBuffer string
 	rBuffer string
+}
+
+var version string = "devel"
+var revision string = "devel"
+
+func main() {
+	os.Exit(Run(version, revision))
 }
 
 func parseLine(lineBuffer string, chCursorPos int) (lineInfo, error) {
