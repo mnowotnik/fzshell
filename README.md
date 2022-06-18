@@ -159,6 +159,11 @@ by popular demand. fzshell will advance to 1.0 after user feedback in the coming
 
 Default zsh completions turned into fuzzy ones thanks to fzf.
 
+### [fig.io](https://fig.io/)
+
+Dropdown for different completions computed from context and also framework for additional terminal apps.
+Only for MacOS.
+
 ## Disclaimer
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
