@@ -153,6 +153,12 @@ Development setup is smooth and easy thanks to Go modules.
 fzshell is still in beta, however the specification is unlikely to change, unless
 by popular demand. fzshell will advance to 1.0 after user feedback in the coming weeks.
 
+## Similar tools
+
+### [fzf-tab](https://github.com/Aloxaf/fzf-tab)
+
+Default zsh completions turned into fuzzy ones thanks to fzf.
+
 ## Disclaimer
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
