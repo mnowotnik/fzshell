@@ -41,6 +41,7 @@ jobs:
           goversion: 1.18
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
+          build_flags: "./cmd/fzshell"
           binary_name: "fzshell"
           ldflags: > 
             -s -w -X main.version=${{ env.RELEASE_VERSION }} -X main.revision=${{ env.SHORT_COMMIT }}

@@ -180,7 +180,7 @@ if [ -n "$binary_error" ]; then
   fi
   if command -v go >/dev/null; then
     echo "Attempting to build from source..."
-    if go build -ldflags "-s -w -X main.version=$version -X main.revision=$revision"; then
+    if go build -ldflags "-s -w -X main.version=$version -X main.revision=$revision" "./cmd/fzshell"; then
       echo "OK"
     else
       echo "Failed to build binary. Installation failed."
