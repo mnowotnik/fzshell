@@ -9,7 +9,7 @@ STYLE='\e[1;4m'
 NOCOLOR='\033[0m'
 RED='\033[0;31m'
 
-version=0.5.0
+version=0.5.1
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 revision=$(git rev-parse --short HEAD)
 base_dir=$(pwd)
