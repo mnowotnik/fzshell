@@ -14,7 +14,7 @@ revision=$(git rev-parse --short HEAD)
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 base_dir=$(pwd)
 no_instructions=0
-install_fish_keys=0
+install_fish_keys=-1
 
 echo -e ${RED}Warning! Breaking changes in configuration file in version 0.4
 echo -e Update your configuration file. See changelog for details:
@@ -28,9 +28,10 @@ Installation script that either downloads or compiles fzshell binary. Then
 adds or prints instructions to add a shell initialization script.
 
 usage: $0 [OPTIONS]
-    --help               Show this message
-    --no-instructions    Do not print instructions to add lines to your shell config
-    --install-fish-keys  Install fish key bindings without prompt
+    --help                        Show this message
+    --no-instructions             Do not print instructions to add lines to your shell config
+    --install-fish-keys=<yes|no>  Install fish key bindings without prompt
+    --fish=<yes|no>               Install fish key bindings without prompt 
 EOF
 }
 
@@ -39,8 +40,20 @@ for opt in "$@"; do
   --no-instructions)
     no_instructions=1
     ;;
+  --install-fish-keys=y*)
+    install_fish_keys=1
+    ;;
+  --install-fish-keys=n*)
+    install_fish_keys=0
+    ;;
   --install-fish-keys)
     install_fish_keys=1
+    ;;
+  --fish=y*)
+    install_fish_keys=1
+    ;;
+  --fish=n*)
+    install_fish_keys=0
     ;;
   *)
     echo "Unknown option: $opt"
@@ -226,7 +239,7 @@ fish_setup() {
 if command -v fish &>/dev/null; then
   if [ $install_fish_keys -eq 1 ]; then
     fish_setup 1
-  else
+  elif [ $install_fish_keys -eq -1 ]; then
     ask "Do you want to install key bindings for fish?"
     fish_setup $?
   fi
