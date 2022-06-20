@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.5.2
+
+Fixes:
+
+- selectOne and headerLines options are not being ignored anymore
+- install.sh no longer fails when run from different directory than root
+
+Changes:
+
+- renamed selectFirst to selectOne to better reflect its functionality
+- added flags to install.sh that can skip fish config installation dialog
+
 ## 0.4.2
 
 Fixed bugs in `preview`:
