@@ -17,7 +17,7 @@ type CompletionSource struct {
 	PreviewTmpl  string      `yaml:"preview"`
 	HeaderLines  int         `yaml:"headerLines"`
 	Header       interface{} `yaml:"header"`
-	SelectFirst  bool        `yaml:"selectFirst"`
+	SelectOne    bool        `yaml:"selectOne"`
 	PreferHeader bool        `yaml:"selectHeader"`
 }
 
@@ -97,19 +97,19 @@ func (cs *CompletionSource) pipeCommandToFzf(args []string, kwargs map[string]st
 			}
 			return buf.String(), nil
 		}
-		options.HeaderLines = cs.HeaderLines
-		if cs.Header != nil {
-			switch v := cs.Header.(type) {
-			case string:
-				options.Header = []string{v}
-			case []string:
-				options.Header = v
-			default:
-				return nil, errors.New("wrong value for 'header' key")
-			}
-		}
-		options.Select1 = cs.SelectFirst
 	}
+	options.HeaderLines = cs.HeaderLines
+	if cs.Header != nil {
+		switch v := cs.Header.(type) {
+		case string:
+			options.Header = []string{v}
+		case []string:
+			options.Header = v
+		default:
+			return nil, errors.New("wrong value for 'header' key")
+		}
+	}
+	options.Select1 = cs.SelectOne
 	if returnAll {
 		var filter string = ""
 		options.Filter = &filter

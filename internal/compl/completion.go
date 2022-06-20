@@ -88,7 +88,7 @@ func (c *Completion) finder(match *MatchResult, returnAll bool) ([]string, error
 		return []string{}, nil
 	}
 
-	if len(complResult) == 1 || c.SelectFirst {
+	if len(complResult) == 1 || c.SelectOne {
 		return []string{complResult[0]}, nil
 	}
 	if returnAll {
