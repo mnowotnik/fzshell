@@ -164,6 +164,11 @@ Default zsh completions turned into fuzzy ones thanks to fzf.
 Dropdown for different completions computed from context and also framework for additional terminal apps.
 Only for MacOS.
 
+## Acknowledgments
+
+This tool is possible thanks to open source fuzzy finders. First fuzzy finder used was [go-fuzzyfinder](https://github.com/ktr0731/go-fuzzyfinder).
+After that fzshell embedded a more feature complete finder, the excellent [fzf](https://github.com/junegunn/fzf). 
+
 ## Disclaimer
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
