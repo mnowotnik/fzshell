@@ -148,6 +148,13 @@ Development setup is smooth and easy thanks to Go modules.
 - linting: `make lint` (requires `staticcheck`)
 - coverage report: `make cover-report`
 
+## Contribution guidelines
+
+Collaborators working on shared improvements should base their work on the
+`functional-tests` branch for the current cycle. Please create feature branches
+from `functional-tests` and submit pull requests back to it so ongoing work
+remains aligned.
+
 ## On the way to 1.0.0
 
 fzshell is still in beta, however the specification is unlikely to change, unless
