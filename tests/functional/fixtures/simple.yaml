@@ -1,0 +1,3 @@
+completions:
+  - pattern: "simple$"
+    cmd: "printf 'alpha\\nbeta\\n'"

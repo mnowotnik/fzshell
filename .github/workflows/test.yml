@@ -10,11 +10,11 @@ jobs:
     strategy:
       matrix:
         os: [ "ubuntu-latest", "macos-latest" ]
-        go-version: [ "1.18" ]
+        go-version: [ "1.25.x" ]
     runs-on: ${{ matrix.os }}
     steps:
     - name: setup Go ${{ matrix.go-version }}
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v6
       with:
         go-version: ${{ matrix.go-version }}
     - name: checkout
@@ -22,7 +22,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: lint
-      uses: dominikh/staticcheck-action@v1.2.0
+      uses: dominikh/staticcheck-action@v1.3.0
       with:
           version: "2022.1"
           install-go: false
