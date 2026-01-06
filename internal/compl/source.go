@@ -110,7 +110,7 @@ func (cs *CompletionSource) pipeCommandToFzf(args []string, kwargs map[string]st
 		}
 	}
 	options.Select1 = cs.SelectOne
-	if returnAll || !term.IsTerminal(int(os.Stdout.Fd())) || !term.IsTerminal(int(os.Stdin.Fd())) {
+	if returnAll || !term.IsTerminal(int(os.Stdout.Fd())) || !term.IsTerminal(int(os.Stdin.Fd())) || !term.IsTerminal(int(os.Stderr.Fd())) {
 		var filter string = ""
 		options.Filter = &filter
 	}
