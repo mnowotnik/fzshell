@@ -2,6 +2,7 @@ package functional_test
 
 import (
 	"bytes"
+	"errors"
 	"context"
 	"io"
 	"os"
