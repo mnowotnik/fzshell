@@ -33,7 +33,7 @@ func TestReplacementRendersMappedItem(t *testing.T) {
 		t.Fatalf("expected exit code 0, got %d (stderr: %q)", result.ExitCode, result.Stderr)
 	}
 
-	const expectedOutput = "ticket 42/build -> 42|build|command:42:build\n"
+	const expectedOutput = "ticket 42/build -> 42|build|command:42:build"
 	if result.Stdout != expectedOutput {
 		t.Fatalf("unexpected stdout: got %q, want %q", result.Stdout, expectedOutput)
 	}
