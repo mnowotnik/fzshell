@@ -38,7 +38,7 @@ jobs:
         uses: wangyoucao577/go-release-action@v1.28
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          goversion: 1.18
+          goversion: "https://go.dev/dl/go1.27.2.linux-amd64.tar.gz"
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           project_path: "./cmd/fzshell"

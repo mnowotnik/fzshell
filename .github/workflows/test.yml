@@ -8,25 +8,32 @@ jobs:
   test:
     name: Test
     strategy:
+      fail-fast: false
       matrix:
-        os: [ "ubuntu-latest", "macos-latest" ]
-        go-version: [ "1.25.x" ]
+        include:
+          - os: ubuntu-latest
+            go-version: "1.18.x"
+          - os: ubuntu-latest
+            go-version: "1.27.x"
+          - os: macos-latest
+            go-version: "1.27.x"
     runs-on: ${{ matrix.os }}
     steps:
-    - name: setup Go ${{ matrix.go-version }}
-      uses: actions/setup-go@v6
-      with:
-        go-version: ${{ matrix.go-version }}
     - name: checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
+    - name: setup Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v6
+      with:
+        go-version: ${{ matrix.go-version }}
     - name: lint
+      if: ${{ matrix.go-version != '1.18.x' }}
       uses: dominikh/staticcheck-action@v1.3.0
       with:
-          version: "2022.1"
+          version: "2026.2.1"
           install-go: false
-          cache-key: ${{ matrix.go }}
+          cache-key: ${{ matrix.go-version }}
     - name: vet
       run: "go vet ./..."
     - name: test

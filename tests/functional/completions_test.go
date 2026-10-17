@@ -27,7 +27,7 @@ func TestReturnAllOutputsAllItems(t *testing.T) {
 func TestReplacementRendersLineBuffer(t *testing.T) {
 	configPath := filepath.Join(repoRoot, "tests", "functional", "fixtures", "replacement.yaml")
 
-	result := runFzshell(t, []string{"--config", configPath, "ticket 42/build"}, "", nil)
+	result := runFzshell(t, []string{"--config", configPath, "--all", "ticket 42/build"}, "", nil)
 
 	if result.ExitCode != 0 {
 		t.Fatalf("expected exit code 0, got %d (stderr: %q)", result.ExitCode, result.Stderr)
