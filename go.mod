@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/Masterminds/sprig/v3 v3.0.2
 	github.com/alexflint/go-arg v1.4.3
+	github.com/creack/pty v1.1.24
 	github.com/goccy/go-yaml v1.9.5
 	github.com/mnowotnik/fzf v0.0.0-20220617192912-adcb74e97d0f
 	github.com/pkg/errors v0.9.1
