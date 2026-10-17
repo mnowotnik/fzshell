@@ -3,7 +3,6 @@ package functional_test
 import (
 	"bytes"
 	"context"
-	"errors"
 	"io"
 	"os"
 	"os/exec"
@@ -13,7 +12,10 @@ import (
 	"github.com/creack/pty"
 )
 
-const fzshellPTYTimeout = 15 * time.Second
+const (
+	fzshellPTYTimeout      = 15 * time.Second
+	fzshellPTYDrainTimeout = 2 * time.Second
+)
 
 // runFzshellWithPTY gives fzshell a controlling terminal while keeping its
 // stdout and stderr captured separately. The replacement flow uses fzf's
@@ -60,7 +62,8 @@ func runFzshellWithPTY(t *testing.T, args []string, env map[string]string) Comma
 
 	tty, err := pty.StartWithSize(cmd, &pty.Winsize{Rows: 24, Cols: 80})
 	if errors.Is(err, pty.ErrUnsupported) {
-		return runFzshell(t, args, "", env)
+		t.Skipf("pseudo-terminals are unsupported on this platform: %v", err)
+		return CommandResult{}
 	}
 	if err != nil {
 		t.Fatalf("failed to start fzshell with a pseudo-terminal: %v", err)
@@ -74,7 +77,11 @@ func runFzshellWithPTY(t *testing.T, args []string, env map[string]string) Comma
 
 	err = cmd.Wait()
 	_ = tty.Close()
-	<-drained
+	select {
+	case <-drained:
+	case <-time.After(fzshellPTYDrainTimeout):
+		t.Fatalf("timed out waiting for pseudo-terminal output drain to stop")
+	}
 
 	if ctx.Err() != nil {
 		t.Fatalf("fzshell timed out after %s (stderr: %q)", fzshellPTYTimeout, stderrBuf.String())
