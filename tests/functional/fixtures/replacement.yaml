@@ -1,0 +1,6 @@
+completions:
+  - pattern: "ticket (?P<ID>[0-9]+)/(\\w+)$"
+    cmd: "printf 'command:%s:%s\\n' \"$ID\" \"$1\""
+    map: "{{ printf \"%s|%s|%s\" .ID ._1 .item }}"
+    replacement: "ticket {{.ID}}/{{._1}} -> {{.item}}"
+    selectOne: true

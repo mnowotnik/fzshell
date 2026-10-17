@@ -3,7 +3,6 @@ package compl
 import (
 	"os"
 	"os/exec"
-
 	"text/template"
 
 	fzf "github.com/mnowotnik/fzf/src"
