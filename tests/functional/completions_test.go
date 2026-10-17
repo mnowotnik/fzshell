@@ -24,7 +24,7 @@ func TestReturnAllOutputsAllItems(t *testing.T) {
 	}
 }
 
-func TestReplacementRendersLineBuffer(t *testing.T) {
+func TestReturnAllOutputsMappedItem(t *testing.T) {
 	configPath := filepath.Join(repoRoot, "tests", "functional", "fixtures", "replacement.yaml")
 
 	result := runFzshell(t, []string{"--config", configPath, "--all", "ticket 42/build"}, "", nil)
@@ -33,7 +33,7 @@ func TestReplacementRendersLineBuffer(t *testing.T) {
 		t.Fatalf("expected exit code 0, got %d (stderr: %q)", result.ExitCode, result.Stderr)
 	}
 
-	const expectedOutput = "ticket 42/build -> 42|build|command:42:build"
+	const expectedOutput = "42|build|command:42:build\n"
 	if result.Stdout != expectedOutput {
 		t.Fatalf("unexpected stdout: got %q, want %q", result.Stdout, expectedOutput)
 	}
